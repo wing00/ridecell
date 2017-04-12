@@ -37,6 +37,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    'rest_framework',
+    'apps.parking',
 ]
 
 MIDDLEWARE = [
@@ -70,16 +73,17 @@ TEMPLATES = [
 WSGI_APPLICATION = 'ridecell.wsgi.application'
 
 
-# Database
-# https://docs.djangoproject.com/en/1.11/ref/settings/#databases
-
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': 'ridecell',
+            'USER': 'styoung',
+            'PASSWORD': '514Bryant',
+            'HOST': 'localhost',
+            'PORT': 5432,
+            'ATOMIC_REQUESTS': True,
+        }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/1.11/ref/settings/#auth-password-validators
@@ -104,13 +108,9 @@ AUTH_PASSWORD_VALIDATORS = [
 # https://docs.djangoproject.com/en/1.11/topics/i18n/
 
 LANGUAGE_CODE = 'en-us'
-
 TIME_ZONE = 'UTC'
-
 USE_I18N = True
-
 USE_L10N = True
-
 USE_TZ = True
 
 
