@@ -40,7 +40,9 @@ INSTALLED_APPS = [
 
     'apps.parking',
 
+    'django.contrib.gis',
     'rest_framework',
+    'rest_framework_gis',
 ]
 
 MIDDLEWARE = [
@@ -76,7 +78,7 @@ WSGI_APPLICATION = 'ridecell.wsgi.application'
 
 DATABASES = {
     'default': {
-            'ENGINE': 'django.db.backends.postgresql',
+            'ENGINE': 'django.contrib.gis.db.backends.postgis',
             'NAME': 'ridecell',
             'USER': 'styoung',
             'PASSWORD': '514Bryant',
