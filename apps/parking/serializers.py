@@ -1,3 +1,4 @@
+from datetime import datetime
 from rest_framework import serializers
 from rest_framework_gis.serializers import GeoFeatureModelSerializer, GeometrySerializerMethodField
 from .models import *
@@ -10,38 +11,27 @@ class LocationSerializer(GeoFeatureModelSerializer):
         fields = ['id', 'point']
 
 
-class ParkingSpotSerializer(serializers.Serializer):
-    location = GeometrySerializerMethodField()
-    start_time = serializers.DateTimeField()
-    end_time = serializers.DateTimeField()
-    occupied = serializers.BooleanField(default=False)
+class ReservationSerializer(serializers.HyperlinkedModelSerializer):
+    location = LocationSerializer()
+
+    class Meta:
+        model = Reservation
+        fields = ['id', 'start_time', 'end_time', 'location', 'occupied']
 
     def create(self, validated_data):
-        return Reservations.objects.create(**validated_data)
+        location = validated_data.pop('location')
 
-    def update(self, instance, validated_data):
-        instance.latitude = validated_data.get('latitude', instance.latitude)
-        instance.longitude = validated_data.get('longitude', instance.longitude)
-        instance.radius = validated_data.get('radius', instance.radius)
+        location_object = Location.objects.create(**location)
+        validated_data['location'] = location_object
+        reservation = Reservation.objects.create(**validated_data)
 
-        return instance
-
-
-class ReservationsListSerializer(serializers.HyperlinkedModelSerializer):
-    class Meta:
-        model = Location
-        fields = ('parking_spot', 'start_time', 'end_time', 'location')
+        return reservation
 
 
 class ReservationsUpdateSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
-        model = Location
-        fields = ('parking_spot', 'start_time', 'end_time', 'occupied')
+        model = Reservation
+        fields = ['id', 'start_time', 'end_time', 'occupied']
 
-    def update(self, instance, validated_data):
-        instance.parking_spot = validated_data.get('parking_spot', instance.parking_spot)
-        instance.start_time = validated_data.get('start_time', instance.start_time)
-        instance.end_time = validated_data.get('end_time', instance.end_time)
-        instance.occupied = True
-        return instance
+
 

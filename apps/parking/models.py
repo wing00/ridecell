@@ -13,7 +13,7 @@ class Location(models.Model):
     point = models.PointField()
 
 
-class Reservations(models.Model):
+class Reservation(models.Model):
     location = models.ForeignKey(Location, on_delete=models.CASCADE)
     start_time = models.DateTimeField()
     end_time = models.DateTimeField()
