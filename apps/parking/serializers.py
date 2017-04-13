@@ -1,16 +1,17 @@
 from rest_framework import serializers
-from rest_framework_gis.serializers import GeoFeatureModelSerializer
+from rest_framework_gis.serializers import GeoFeatureModelSerializer, GeometrySerializerMethodField
 from .models import *
 
 
 class LocationSerializer(GeoFeatureModelSerializer):
-
     class Meta:
-        model = Locations
+        model = Location
         geo_field = 'point'
+        fields = ['id', 'point']
 
 
 class ParkingSpotSerializer(serializers.Serializer):
+    location = GeometrySerializerMethodField()
     start_time = serializers.DateTimeField()
     end_time = serializers.DateTimeField()
     occupied = serializers.BooleanField(default=False)
@@ -28,13 +29,13 @@ class ParkingSpotSerializer(serializers.Serializer):
 
 class ReservationsListSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
-        model = Locations
+        model = Location
         fields = ('parking_spot', 'start_time', 'end_time', 'location')
 
 
 class ReservationsUpdateSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
-        model = Locations
+        model = Location
         fields = ('parking_spot', 'start_time', 'end_time', 'occupied')
 
     def update(self, instance, validated_data):

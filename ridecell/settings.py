@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'apps.parking',
 
     'django.contrib.gis',
+    'django_filters',
     'rest_framework',
     'rest_framework_gis',
 ]
@@ -75,6 +76,9 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'ridecell.wsgi.application'
 
+REST_FRAMEWORK = {
+    'DEFAULT_FILTER_BACKENDS': ('django_filters.rest_framework.DjangoFilterBackend',)
+}
 
 DATABASES = {
     'default': {
