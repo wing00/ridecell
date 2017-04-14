@@ -11,6 +11,8 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 """
 
 import os
+import dj_database_url
+
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -80,17 +82,24 @@ REST_FRAMEWORK = {
     'DEFAULT_FILTER_BACKENDS': ('django_filters.rest_framework.DjangoFilterBackend',)
 }
 
-DATABASES = {
-    'default': {
-            'ENGINE': 'django.contrib.gis.db.backends.postgis',
-            'NAME': 'ridecell',
-            'USER': 'styoung',
-            'PASSWORD': '514Bryant',
-            'HOST': 'localhost',
-            'PORT': 5432,
-            'ATOMIC_REQUESTS': True,
-        }
-}
+
+if os.environ['local']:
+    DATABASES = {
+        'default': {
+                'ENGINE': 'django.contrib.gis.db.backends.postgis',
+                'NAME': 'ridecell',
+                'USER': 'styoung',
+                'PASSWORD': '514Bryant',
+                'HOST': 'localhost',
+                'PORT': 5432,
+                'ATOMIC_REQUESTS': True,
+            }
+    }
+
+else:
+    DATABASES['default'] = dj_database_url.config()
+    DATABASES['default']['ENGINE'] = 'django.contrib.gis.db.backends.postgis'
+
 
 # Password validation
 # https://docs.djangoproject.com/en/1.11/ref/settings/#auth-password-validators
