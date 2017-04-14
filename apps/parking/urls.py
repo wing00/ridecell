@@ -11,6 +11,11 @@ public location endpoint
 /location/?dist=<radius>&point=<long>,<lat>
 /location/?dist=1&point=10,10
 
+
+
+curl -XPATCH -H "Content-type: application/json" -d '{"start_time":"2018-04-12T01:01:00Z", "occupied":true}' http://localhost:8000/reserve_spot/11/
+
+
 """
 
 router = DefaultRouter()

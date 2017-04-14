@@ -41,4 +41,3 @@ class ReservationsUpdateSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Reservation
         fields = ['id', 'start_time', 'end_time']
-
