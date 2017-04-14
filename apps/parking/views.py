@@ -36,5 +36,3 @@ class ReservationViewSet(ModelViewSet):
 class ReservationUpdateView(UpdateAPIView):
     queryset = Reservation.objects.filter(location__occupied=False)
     serializer_class = ReservationsUpdateSerializer
-
-
