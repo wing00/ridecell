@@ -11,8 +11,6 @@ public location endpoint
 /location/?dist=<radius>&point=<long>,<lat>
 /location/?dist=1&point=10,10
 
-
-
 """
 
 router = DefaultRouter()
@@ -23,5 +21,6 @@ urlpatterns = [
     url(r'', include(router.urls)),
     url(r'^add_location/$', LocationCreateView.as_view()),
     url(r'^location/$', LocationListView.as_view()),
+    url(r'^free_spot/$', ReservationListView.as_view()),
     url(r'^reserve_spot/(?P<pk>[\d]+)/$', ReservationUpdateView.as_view()),
 ]

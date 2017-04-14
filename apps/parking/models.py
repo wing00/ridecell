@@ -11,10 +11,10 @@ class Migration(migrations.Migration):
 
 class Location(models.Model):
     point = models.PointField()
+    occupied = models.BooleanField(default=False)
 
 
 class Reservation(models.Model):
     location = models.ForeignKey(Location, on_delete=models.CASCADE)
     start_time = models.DateTimeField()
     end_time = models.DateTimeField()
-    occupied = models.BooleanField(default=False)

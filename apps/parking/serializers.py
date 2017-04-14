@@ -8,7 +8,7 @@ class LocationSerializer(GeoFeatureModelSerializer):
     class Meta:
         model = Location
         geo_field = 'point'
-        fields = ['id', 'point']
+        fields = ['id', 'point', 'occupied']
 
 
 class ReservationSerializer(serializers.HyperlinkedModelSerializer):
@@ -16,7 +16,7 @@ class ReservationSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = Reservation
-        fields = ['id', 'start_time', 'end_time', 'location', 'occupied']
+        fields = ['id', 'start_time', 'end_time', 'location']
 
     def create(self, validated_data):
         location = validated_data.pop('location')
@@ -28,10 +28,17 @@ class ReservationSerializer(serializers.HyperlinkedModelSerializer):
         return reservation
 
 
+class FreeSpotsSerializer(serializers.HyperlinkedModelSerializer):
+    queryset = Reservation.objects.all()
+    location = LocationSerializer()
+
+    class Meta:
+        model = Reservation
+        fields = ['id', 'location']
+
+
 class ReservationsUpdateSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Reservation
-        fields = ['id', 'start_time', 'end_time', 'occupied']
-
-
+        fields = ['id', 'start_time', 'end_time']
 

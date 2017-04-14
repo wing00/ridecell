@@ -13,11 +13,19 @@ class LocationCreateView(CreateAPIView):
 
 
 class LocationListView(ListAPIView):
-    queryset = Location.objects.all()
+    queryset = Location.objects.filter(occupied=False)
     serializer_class = LocationSerializer
     distance_filter_field = 'point'
     filter_backends = (DistanceToPointFilter, )
     filter_fields = ('point', )
+
+
+class ReservationListView(ListAPIView):
+    queryset = Reservation.objects.all()
+    serializer_class = FreeSpotsSerializer
+    distance_filter_field = 'location'
+    filter_backends = (DistanceToPointFilter, )
+    filter_fields = ('location', )
 
 
 class ReservationViewSet(ModelViewSet):
@@ -26,7 +34,7 @@ class ReservationViewSet(ModelViewSet):
 
 
 class ReservationUpdateView(UpdateAPIView):
-    queryset = Reservation.objects.all()
+    queryset = Reservation.objects.filter(location__occupied=False)
     serializer_class = ReservationsUpdateSerializer
 
 
