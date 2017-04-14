@@ -11,11 +11,13 @@ public location endpoint
 /location/?dist=<radius>&point=<long>,<lat>
 /location/?dist=1&point=10,10
 
+private reservation endpoint
+/parking_spot/
 
+public  reservation endpoint
+/reserve_spot/<id>/
 
-curl -XPATCH -H "Content-type: application/json" -d '{"start_time":"2018-04-12T01:01:00Z", "occupied":true}' http://localhost:8000/reserve_spot/11/
-
-
+curl -XPATCH -H "Content-type: application/json" -d '{"start_time":"2018-04-12T01:01:00Z", "end_time":"2018-04-12T01:01:00Z"}' http://localhost:8000/reserve_spot/11/
 """
 
 router = DefaultRouter()
