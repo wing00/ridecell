@@ -83,7 +83,7 @@ REST_FRAMEWORK = {
 }
 
 
-if os.environ['local']:
+if os.environ.get('local'):
     DATABASES = {
         'default': {
                 'ENGINE': 'django.contrib.gis.db.backends.postgis',
