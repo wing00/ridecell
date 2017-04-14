@@ -83,20 +83,20 @@ REST_FRAMEWORK = {
 }
 
 
-if os.environ.get('local'):
-    DATABASES = {
-        'default': {
-                'ENGINE': 'django.contrib.gis.db.backends.postgis',
-                'NAME': 'ridecell',
-                'USER': 'styoung',
-                'PASSWORD': '514Bryant',
-                'HOST': 'localhost',
-                'PORT': 5432,
-                'ATOMIC_REQUESTS': True,
-            }
-    }
 
-else:
+DATABASES = {
+    'default': {
+            'ENGINE': 'django.contrib.gis.db.backends.postgis',
+            'NAME': 'ridecell',
+            'USER': 'styoung',
+            'PASSWORD': '514Bryant',
+            'HOST': 'localhost',
+            'PORT': 5432,
+            'ATOMIC_REQUESTS': True,
+        }
+}
+
+if os.environ.get('local') is None:
     DATABASES['default'] = dj_database_url.config()
     DATABASES['default']['ENGINE'] = 'django.contrib.gis.db.backends.postgis'
 
